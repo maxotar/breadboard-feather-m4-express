@@ -40,3 +40,21 @@ If you add C++17-only constructs (e.g., `inline constexpr` globals) you may need
 
 ## Testing & CI 💡
 - No tests yet. Recommended first tests: `utils.h` (pure helper) and `button` timing logic.
+
+---
+
+## Hardware
+
+- Board: Adafruit Feather M4 Express (ATSAMD51 / 3.3V logic). Power the project from the Feather 3.3V rail. Ensure a common ground between all modules.
+- Display: 4 × 14‑segment alphanumeric backpacks (HT16K33 I2C backpacks). All four are driven via I2C (default address 0x70 in this project). Connect SDA/SCL to the Feather's I2C pins (the SDA / SCL labeled pins on the Feather). Power the displays from 3.3V.
+- Onboard NeoPixel: the Feather's built‑in NeoPixel is used for the beat pulse (configured in code). No external resistor required for the built‑in pixel; for external NeoPixel strips use a ~470Ω data resistor and a 1000µF power capacitor across V+ and GND.
+- Status LEDs (5): pins (MSB → LSB) 11, 10, 9, 6, 5. Wire each LED with a series current‑limiting resistor (recommended 220–470Ω) from the MCU pin to the LED to GND.
+- Buttons: A2 = Toggle (start/stop), A3 = Down (-5 BPM), A4 = Up (+5 BPM). Buttons are wired to the pin and to GND; the firmware uses INPUT_PULLUP, so pressing pulls the pin LOW.
+- Built‑in indicator: pin 13 (onboard LED). Driven HIGH when metronome is enabled.
+- Resistors & general wiring:
+  - External indicator LEDs: 220–470Ω series resistors per LED.
+  - Buttons: no external pull‑downs required (using internal pull‑ups). If you prefer external components, use a 10kΩ pull‑up and wire button between pin and GND.
+  - NeoPixel/LED power: if using external LEDs or strips, ensure adequate power supply current and common ground.
+- Notes:
+  - All logic is 3.3V; check peripheral voltage compatibility before wiring 5V devices.
+  - Keep I2C wiring short and share common GND. If adding multiple I2C backpacks, ensure unique addresses or use the same HT16K33 addressing scheme used by the project.
