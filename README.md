@@ -4,6 +4,7 @@ Short, focused firmware for an Adafruit Feather M4 Express-based metronome.
 
 ## Features ✅
 - Onboard NeoPixel pulse synced to BPM (dimmed blue)
+- Haptic motor vibration synced to BPM via DRV2605L driver (effect #1)
 - 4‑digit 14‑segment display shows current BPM
 - Buttons: toggle start/stop, -5 BPM, +5 BPM; long-press repeat supported
 - 5 external LEDs show scaled BPM in 5‑bit binary (MSB on pin 11)
@@ -19,6 +20,7 @@ Short, focused firmware for an Adafruit Feather M4 Express-based metronome.
   - `neopixel.*` — NeoPixel helper
   - `display.*` — 14‑segment display wrapper
   - `leds.*` — LED indicator wrapper
+  - `haptic.*` — DRV2605L haptic motor driver wrapper
   - `storage.*` — FlashStorage wrapper (save/load + delayed writes)
   - `metronome.*` — beat scheduling and pulse control
 - `include/`
@@ -47,6 +49,7 @@ If you add C++17-only constructs (e.g., `inline constexpr` globals) you may need
 
 - Board: Adafruit Feather M4 Express (ATSAMD51 / 3.3V logic). Power the project from the Feather 3.3V rail. Ensure a common ground between all modules.
 - Display: 4 × 14‑segment alphanumeric backpacks (HT16K33 I2C backpacks). All four are driven via I2C (default address 0x70 in this project). Connect SDA/SCL to the Feather's I2C pins (the SDA / SCL labeled pins on the Feather). Power the displays from 3.3V.
+- Haptic Motor: Adafruit DRV2605L Haptic Motor Driver Breakout. Connect via I2C (SDA/SCL to the Feather's I2C pins, default address 0x5A). Power from 3.3V. The motor triggers effect #1 (strong click) synchronized with each beat. Ensure a vibrating motor (ERM or LRA) is connected to the DRV2605L driver outputs.
 - Onboard NeoPixel: the Feather's built‑in NeoPixel is used for the beat pulse (configured in code). No external resistor required for the built‑in pixel; for external NeoPixel strips use a ~470Ω data resistor and a 1000µF power capacitor across V+ and GND.
 - Status LEDs (5): pins (MSB → LSB) 11, 10, 9, 6, 5. Wire each LED with a series current‑limiting resistor (recommended 220–470Ω) from the MCU pin to the LED to GND.
 - Buttons: A2 = Toggle (start/stop), A3 = Down (-5 BPM), A4 = Up (+5 BPM). Buttons are wired to the pin and to GND; the firmware uses INPUT_PULLUP, so pressing pulls the pin LOW.

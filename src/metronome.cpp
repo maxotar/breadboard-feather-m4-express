@@ -1,5 +1,6 @@
 #include "metronome.h"
 #include "neopixel.h"
+#include "haptic.h"
 #include "config.h"
 #include <Arduino.h>
 
@@ -72,6 +73,7 @@ void metronomeLoop(uint32_t now)
         {
             // Start pulse
             neoSetBlue(true);
+            hapticTriggerBeat();
             g_pulseActive = true;
             g_beatEndMs = now + g_pulseLengthMs;
             g_nextBeatMs = now + g_beatIntervalMs;
