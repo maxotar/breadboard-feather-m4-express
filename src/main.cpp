@@ -5,6 +5,7 @@
 #include "leds.h"
 #include "button.h"
 #include "metronome.h"
+#include "haptic.h"
 #include "config.h"
 
 enum ButtonIndex
@@ -82,6 +83,9 @@ void setup()
   // NeoPixel
   neoInit();
   neoSetBlue(false);
+
+  // Haptic motor
+  hapticInit();
 
   // Buttons: initialize Button objects
   for (uint8_t i = 0; i < config::BUTTON_COUNT; ++i)
